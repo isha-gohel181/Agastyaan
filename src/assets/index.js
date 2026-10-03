@@ -27,7 +27,7 @@ import AssignmentProcess from "./images/AssignmentProcess.webp";
 import GroomingSession from "./images/groomingsoon.webp";
 import InterViewCalls from "./images/InterviewCallsPlacement.webp";
 import DemoImg from "./images/demoimg.webp";
-import itservices from "./images/itservices.webp";
+import itservices from "./images/Itservices.webp";
 import companyworking from "./images/companyworking.webp";
 
 import services from "./images/services.webp";
