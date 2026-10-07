@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FloatingButtons from "../components/FloatingButtons";
-import FireflyEffect from "../components/FireflyEffect";
+import FixedLivingBackground from "../components/FixedLivingBackground";
 
 const SiteLayout = () => {
   const { pathname } = useLocation();
@@ -13,15 +13,15 @@ const SiteLayout = () => {
   }, [pathname]);
 
   return (
-    <div className="relative min-h-screen bg-slate-50 dark:bg-[#050716] text-gray-900 dark:text-[#e9eefc] overflow-x-hidden transition-colors duration-500">
+    <div className="relative min-h-screen bg-transparent text-gray-900 dark:text-[#e9eefc] overflow-x-hidden transition-colors duration-500">
 
-      {/* Global Interactive Firefly Particle System in Background Layer */}
-      <FireflyEffect />
+      {/* Global Fixed Living World Canvas Background (Static across all pages and scrolling) */}
+      <FixedLivingBackground />
 
       {/* Header */}
       <Header />
 
-      {/* Main Content Sections (Transparent wrapper so fireflies show behind all sections) */}
+      {/* Main Content Sections (Transparent wrapper so static living background shows through all sections) */}
       <main className="relative z-10 pt-16 bg-transparent">
         <Outlet />
       </main>
