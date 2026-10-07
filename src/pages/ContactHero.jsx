@@ -5,9 +5,8 @@ const ContactHero = () => {
   return (
     <section className="
       relative pt-28 pb-16 md:pt-36 md:pb-24 
-      bg-gradient-to-b from-orange-50/50 via-white to-emerald-50/20 
-      dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-transparent
-      overflow-hidden transition-colors duration-500 border-b border-gray-200/60 dark:border-gray-800/40
+      bg-transparent
+      overflow-hidden transition-colors duration-500 border-b border-orange-200/40 dark:border-gray-800/40
     ">
 
       {/* Background Grid Pattern */}
@@ -55,7 +54,7 @@ const ContactHero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="
-            text-base sm:text-lg text-gray-600 dark:text-gray-300 
+            text-base sm:text-lg text-gray-700 dark:text-gray-300 
             max-w-3xl mx-auto leading-relaxed mb-8
           "
         >
@@ -72,7 +71,7 @@ const ContactHero = () => {
         >
           <a
             href="tel:+916230466249"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:border-[#ef7b01] text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 transition"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm hover:border-[#ef7b01] text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 transition"
           >
             <PhoneCall className="w-4 h-4 text-[#ef7b01]" />
             +91-6230466249
@@ -80,13 +79,13 @@ const ContactHero = () => {
 
           <a
             href="mailto:agastyaantechnology@gmail.com"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm hover:border-[#2E7D32] text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 transition"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm hover:border-[#2E7D32] text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200 transition"
           >
             <Mail className="w-4 h-4 text-[#2E7D32]" />
             agastyaantechnology@gmail.com
           </a>
 
-          <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
+          <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm text-xs sm:text-sm font-bold text-gray-800 dark:text-gray-200">
             <MapPin className="w-4 h-4 text-blue-500" />
             Kharar, Mohali, Punjab
           </div>

@@ -16,9 +16,8 @@ const OurCoursesHero = () => {
     <section
       className="
         relative overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28
-        bg-gradient-to-b from-orange-50/50 via-white to-emerald-50/20
-        dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-transparent
-        transition-colors duration-500 border-b border-gray-200/60 dark:border-gray-800/40
+        bg-transparent
+        transition-colors duration-500 border-b border-orange-200/40 dark:border-gray-800/40
       "
     >
       {/* Background SVG Grid Pattern & Glows */}
@@ -56,19 +55,19 @@ const OurCoursesHero = () => {
             That <span className="text-[#ef7b01] dark:text-orange-400">Companies Hire For</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
             Hands-on, job-oriented software development training with live projects, expert mentorship, resume optimization, and 100% placement support.
           </p>
 
           {/* Key Value Points */}
           <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8 text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm">
               <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" /> Live Industrial Projects
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm">
               <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" /> 1-on-1 Mentor Guidance
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm">
               <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" /> Placement Assistance
             </div>
           </div>
@@ -91,7 +90,7 @@ const OurCoursesHero = () => {
               to="/enquiry"
               className="
                 inline-flex items-center gap-2
-                bg-white dark:bg-gray-900
+                bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md
                 border-2 border-[#2E7D32] text-[#2E7D32]
                 dark:text-emerald-400 dark:border-emerald-500
                 hover:bg-[#2E7D32] hover:text-white
@@ -113,7 +112,7 @@ const OurCoursesHero = () => {
         >
           <div className="
             p-6 sm:p-8 rounded-3xl
-            bg-white/90 dark:bg-gray-900/90
+            bg-white/90 dark:bg-[#080e24]/90
             backdrop-blur-xl
             border-2 border-orange-200/80 dark:border-gray-800
             shadow-2xl shadow-orange-500/10 dark:shadow-black/60
@@ -141,9 +140,9 @@ const OurCoursesHero = () => {
                   to={item.path}
                   className="
                     flex items-center justify-between p-3.5 rounded-2xl
-                    bg-gray-50 dark:bg-gray-800/60
-                    hover:bg-orange-50 dark:hover:bg-orange-500/10
-                    border border-gray-200/70 dark:border-gray-700/60
+                    bg-white/70 dark:bg-gray-800/60 backdrop-blur-sm
+                    hover:bg-orange-50/90 dark:hover:bg-orange-500/10
+                    border border-orange-100/90 dark:border-gray-700/60
                     hover:border-[#ef7b01]/40
                     transition-all duration-300 group
                   "

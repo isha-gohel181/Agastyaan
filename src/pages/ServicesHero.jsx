@@ -11,9 +11,8 @@ const ServicesHero = () => {
     <section
       className="
         relative py-24 md:py-32 overflow-hidden
-        bg-gradient-to-b from-orange-50/50 via-white to-emerald-50/20
-        dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-transparent
-        transition-colors duration-500 border-b border-gray-200/60 dark:border-gray-800/40
+        bg-transparent
+        transition-colors duration-500 border-b border-orange-200/40 dark:border-gray-800/40
       "
     >
 
@@ -89,15 +88,15 @@ const ServicesHero = () => {
             <span className="text-[#2E7D32] dark:text-emerald-400">Industrial Training</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
             Agastyaan Technology builds custom web apps, mobile solutions, and UI/UX designs while empowering tech aspirants with hands-on industrial training.
           </p>
 
           <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-8 text-xs sm:text-sm font-bold text-gray-700 dark:text-gray-300">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm">
               <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" /> Custom Web & Mobile Apps
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm">
               <CheckCircle2 className="w-4 h-4 text-[#2E7D32]" /> Result-Oriented Growth
             </div>
           </div>
@@ -120,7 +119,7 @@ const ServicesHero = () => {
               to="/courses"
               className="
                 inline-flex items-center gap-2
-                bg-white dark:bg-gray-900
+                bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md
                 border-2 border-[#2E7D32] text-[#2E7D32]
                 dark:text-emerald-400 dark:border-emerald-500
                 hover:bg-[#2E7D32] hover:text-white
@@ -156,7 +155,7 @@ const ServicesHero = () => {
           {/* Floating Badge */}
           <div className="
             absolute -bottom-6 -left-6 p-4 rounded-2xl shadow-xl
-            bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl
+            bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-xl
             border-2 border-[#ef7b01]/40 dark:border-orange-500/30
             hidden sm:flex items-center gap-3
           ">

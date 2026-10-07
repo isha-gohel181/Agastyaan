@@ -42,8 +42,9 @@ const EnquiryNow = () => {
   // Dark friendly input
   const inputClass = `
     mt-1 w-full px-4 py-2 rounded-md
-    border border-gray-300 dark:border-gray-700
-    bg-white dark:bg-gray-900
+    border border-orange-200/80 dark:border-gray-700
+    bg-white/90 dark:bg-gray-900/90
+    backdrop-blur-sm
     text-gray-800 dark:text-white
     placeholder-gray-400 dark:placeholder-gray-500
     focus:outline-none focus:border-[#F28C28]
@@ -55,8 +56,7 @@ const EnquiryNow = () => {
     <div
       className="
         min-h-[100dvh] py-10 md:py-12
-        bg-gradient-to-br from-[#fff7ed] via-white to-[#f0fdf4]
-        dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-transparent
+        bg-transparent
         transition-colors duration-500
       "
     >
@@ -64,11 +64,11 @@ const EnquiryNow = () => {
 
         {/* Card */}
         <div className="
-          max-w-7xl mx-auto overflow-hidden rounded-xl
-          bg-white dark:bg-[#080e24]/90
+          max-w-7xl mx-auto overflow-hidden rounded-2xl
+          bg-white/90 dark:bg-[#080e24]/90
           backdrop-blur-xl
-          shadow-xl dark:shadow-black/40
-          border border-gray-200 dark:border-white/10
+          shadow-xl shadow-orange-500/5 dark:shadow-black/40
+          border border-orange-100/90 dark:border-white/10
         " data-aos="zoom-in">
 
           {/* Header */}

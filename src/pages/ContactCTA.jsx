@@ -3,7 +3,7 @@ import { ArrowRight, Sparkles, BookOpen } from "lucide-react";
 
 const ContactCTA = () => {
   return (
-    <section className="py-20 bg-gray-50 dark:bg-transparent transition-colors duration-500">
+    <section className="py-20 bg-transparent transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
         <div className="p-8 sm:p-14 rounded-3xl bg-gradient-to-r from-gray-900 via-gray-950 to-black text-white relative overflow-hidden shadow-2xl">

@@ -36,7 +36,7 @@ const ContactFormSection = () => {
   };
 
   return (
-    <section className="py-20 md:py-28 bg-white dark:bg-transparent transition-colors duration-500 relative">
+    <section className="py-20 md:py-28 bg-transparent transition-colors duration-500 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
         <div className="grid lg:grid-cols-12 gap-12 items-center">
@@ -57,7 +57,7 @@ const ContactFormSection = () => {
               Get in Touch with Our <span className="text-[#ef7b01]">Expert Team</span>
             </h2>
 
-            <p className="text-gray-600 dark:text-gray-400 mb-8 text-sm sm:text-base">
+            <p className="text-gray-700 dark:text-gray-400 mb-8 text-sm sm:text-base">
               Fill out the form below to enquire about industrial training programs, software services, or general questions.
             </p>
 
@@ -77,7 +77,7 @@ const ContactFormSection = () => {
                       className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                         topic === item
                           ? "bg-[#ef7b01] text-white shadow-md shadow-orange-500/20"
-                          : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                          : "bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border border-orange-200/60 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-orange-50 dark:hover:bg-gray-700"
                       }`}
                     >
                       {item}
@@ -97,7 +97,7 @@ const ContactFormSection = () => {
                     placeholder="John Doe"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#ef7b01] outline-none text-sm transition"
+                    className="w-full px-4 py-3.5 rounded-xl border border-orange-200/80 dark:border-gray-800 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-[#ef7b01] outline-none text-sm transition"
                     required
                   />
                 </div>
@@ -111,7 +111,7 @@ const ContactFormSection = () => {
                     placeholder="+91 98765 43210"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    className="w-full px-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#ef7b01] outline-none text-sm transition"
+                    className="w-full px-4 py-3.5 rounded-xl border border-orange-200/80 dark:border-gray-800 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-[#ef7b01] outline-none text-sm transition"
                   />
                 </div>
               </div>
@@ -126,7 +126,7 @@ const ContactFormSection = () => {
                   placeholder="john@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#ef7b01] outline-none text-sm transition"
+                  className="w-full px-4 py-3.5 rounded-xl border border-orange-200/80 dark:border-gray-800 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-[#ef7b01] outline-none text-sm transition"
                   required
                 />
               </div>
@@ -141,7 +141,7 @@ const ContactFormSection = () => {
                   placeholder="Tell us how we can help you..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-4 py-3.5 rounded-xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#ef7b01] outline-none text-sm transition"
+                  className="w-full px-4 py-3.5 rounded-xl border border-orange-200/80 dark:border-gray-800 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-[#ef7b01] outline-none text-sm transition"
                   required
                 ></textarea>
               </div>
@@ -166,7 +166,7 @@ const ContactFormSection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="lg:col-span-5"
           >
-            <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-gray-200/80 dark:border-gray-800 bg-white dark:bg-gray-900">
+            <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-orange-100/90 dark:border-gray-800 bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-xl">
               
               {/* Google Map Embed */}
               <div className="h-64 sm:h-72 w-full relative">

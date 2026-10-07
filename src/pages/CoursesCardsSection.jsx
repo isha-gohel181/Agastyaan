@@ -71,7 +71,7 @@ const CoursesCardsSection = () => {
       id="courses-grid"
       className="
         py-24 
-        bg-gray-50/80 dark:bg-transparent
+        bg-transparent
         transition-colors duration-500 relative
       "
     >
@@ -93,7 +93,7 @@ const CoursesCardsSection = () => {
             Industry-Oriented <span className="text-[#ef7b01]">Software Programs</span>
           </h2>
 
-          <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg">
+          <p className="text-gray-700 dark:text-gray-300 text-base sm:text-lg">
             Structured modules with 100% practical live project building, code reviews, and career guidance.
           </p>
         </div>
@@ -109,11 +109,11 @@ const CoursesCardsSection = () => {
               viewport={{ once: true }}
               className="
                 group rounded-3xl overflow-hidden
-                bg-white dark:bg-[#080e24]/90
+                bg-white/90 dark:bg-[#080e24]/90
                 backdrop-blur-xl
-                border-2 border-gray-100 dark:border-white/10
+                border-2 border-orange-100/90 dark:border-white/10
                 hover:border-[#ef7b01] dark:hover:border-orange-500
-                shadow-xl shadow-gray-200/50 dark:shadow-black/60
+                shadow-xl shadow-orange-500/5 dark:shadow-black/60
                 hover:shadow-2xl hover:-translate-y-2
                 transition-all duration-500 flex flex-col justify-between
               "

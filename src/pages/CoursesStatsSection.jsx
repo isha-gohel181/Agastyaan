@@ -13,8 +13,7 @@ const CoursesStatsSection = () => {
     <section
       className="
         py-24 relative overflow-hidden
-        bg-gradient-to-br from-orange-50 via-white to-orange-100
-        dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-transparent
+        bg-transparent
         transition-colors duration-500
       "
     >
@@ -23,13 +22,13 @@ const CoursesStatsSection = () => {
       <div className="
         absolute -top-32 -left-32 w-96 h-96 
         bg-orange-200/40 dark:bg-orange-500/10 
-        rounded-full blur-3xl
+        rounded-full blur-3xl pointer-events-none
       "></div>
 
       <div className="
         absolute -bottom-32 -right-32 w-96 h-96 
         bg-orange-300/40 dark:bg-orange-500/10 
-        rounded-full blur-3xl
+        rounded-full blur-3xl pointer-events-none
       "></div>
 
       <div className="relative max-w-7xl mx-auto px-6">
@@ -49,7 +48,7 @@ const CoursesStatsSection = () => {
             Learn. Build. Get Industry Ready.
           </h2>
 
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-700 dark:text-gray-300">
             Practical learning, real-world projects and expert mentorship
             designed for your career growth.
           </p>
@@ -66,9 +65,9 @@ const CoursesStatsSection = () => {
               viewport={{ once: true }}
               className="
                 text-center p-8 rounded-2xl
-                bg-white dark:bg-[#080e24]/90
-                backdrop-blur-md
-                border border-orange-100 dark:border-white/10
+                bg-white/90 dark:bg-[#080e24]/90
+                backdrop-blur-xl
+                border border-orange-100/90 dark:border-white/10
                 shadow-md dark:shadow-black/40
                 hover:shadow-xl hover:-translate-y-2
                 transition duration-300
@@ -78,7 +77,7 @@ const CoursesStatsSection = () => {
                 {item.value}
               </h3>
 
-              <p className="text-gray-600 dark:text-gray-400 text-sm">
+              <p className="text-gray-700 dark:text-gray-400 text-sm font-semibold">
                 {item.label}
               </p>
             </motion.div>
@@ -93,9 +92,9 @@ const CoursesStatsSection = () => {
           className="
             flex flex-col md:flex-row items-center justify-between gap-8
             p-10 md:p-14 rounded-3xl
-            bg-white dark:bg-[#080e24]/90
+            bg-white/90 dark:bg-[#080e24]/90
             backdrop-blur-xl
-            border border-orange-200 dark:border-white/10
+            border border-orange-200/90 dark:border-white/10
             shadow-xl dark:shadow-black/40
           "
         >

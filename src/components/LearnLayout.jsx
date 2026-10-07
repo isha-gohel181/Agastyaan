@@ -30,10 +30,10 @@ const LearnLayout = ({
   targetRoles = []
 }) => {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-transparent text-gray-900 dark:text-gray-100 transition-colors duration-500">
+    <div className="min-h-screen bg-transparent text-gray-900 dark:text-gray-100 transition-colors duration-500">
       
       {/* ================= HERO HEADER ================= */}
-      <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-b from-orange-50/60 via-white to-gray-50 dark:from-transparent dark:via-transparent dark:to-transparent border-b border-gray-200/60 dark:border-gray-800/40">
+      <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden bg-transparent border-b border-orange-200/40 dark:border-gray-800/40">
         
         {/* Glow Effects */}
         <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-7xl h-72 bg-gradient-to-r from-[#ef7b01]/10 via-[#2E7D32]/10 to-blue-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -42,12 +42,12 @@ const LearnLayout = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-6">
+          <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-6 font-semibold">
             <Link to="/" className="hover:text-[#ef7b01] transition">Home</Link>
             <span>/</span>
             <Link to="/courses" className="hover:text-[#ef7b01] transition">Courses</Link>
             <span>/</span>
-            <span className="text-[#ef7b01] font-semibold">{title}</span>
+            <span className="text-[#ef7b01] font-bold">{title}</span>
           </div>
 
           <div className="grid lg:grid-cols-12 gap-10 items-center">
@@ -72,31 +72,31 @@ const LearnLayout = ({
               </h1>
 
               {/* Subtitle */}
-              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed mb-8">
+              <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-2xl leading-relaxed mb-8">
                 {subtitle}
               </p>
 
               {/* Quick Info Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm">
+                <div className="p-3.5 rounded-2xl bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm">
                   <Clock className="w-5 h-5 text-[#ef7b01] mb-1" />
                   <span className="block text-xs text-gray-500 dark:text-gray-400 font-medium">Duration</span>
                   <span className="text-sm font-bold text-gray-900 dark:text-white">{duration}</span>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm">
+                <div className="p-3.5 rounded-2xl bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm">
                   <Award className="w-5 h-5 text-[#2E7D32] mb-1" />
                   <span className="block text-xs text-gray-500 dark:text-gray-400 font-medium">Skill Level</span>
                   <span className="text-sm font-bold text-gray-900 dark:text-white">{level}</span>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm">
+                <div className="p-3.5 rounded-2xl bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm">
                   <Code2 className="w-5 h-5 text-blue-600 mb-1" />
                   <span className="block text-xs text-gray-500 dark:text-gray-400 font-medium">Practice</span>
                   <span className="text-sm font-bold text-gray-900 dark:text-white">{projects}</span>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm">
+                <div className="p-3.5 rounded-2xl bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border border-orange-200/80 dark:border-gray-800 shadow-sm">
                   <Briefcase className="w-5 h-5 text-purple-600 mb-1" />
                   <span className="block text-xs text-gray-500 dark:text-gray-400 font-medium">Placement</span>
                   <span className="text-sm font-bold text-gray-900 dark:text-white">100% Support</span>
@@ -115,7 +115,7 @@ const LearnLayout = ({
 
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 hover:border-[#2E7D32] dark:hover:border-emerald-500 text-gray-800 dark:text-gray-200 font-bold transition-all"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md border-2 border-gray-200 dark:border-gray-800 hover:border-[#2E7D32] dark:hover:border-emerald-500 text-gray-800 dark:text-gray-200 font-bold transition-all"
                 >
                   Talk to Mentor
                 </Link>
@@ -130,7 +130,7 @@ const LearnLayout = ({
               transition={{ duration: 0.5, delay: 0.2 }}
               className="lg:col-span-4"
             >
-              <div className="p-6 sm:p-8 rounded-3xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl border-2 border-orange-200/80 dark:border-gray-800 shadow-2xl relative">
+              <div className="p-6 sm:p-8 rounded-3xl bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-xl border-2 border-orange-200/80 dark:border-gray-800 shadow-2xl relative">
                 
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-black text-gray-900 dark:text-white">
@@ -198,7 +198,7 @@ const LearnLayout = ({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.4 }}
-                className="group p-6 sm:p-8 rounded-3xl bg-white dark:bg-gray-900 border-2 border-gray-100 dark:border-gray-800/80 hover:border-[#ef7b01] dark:hover:border-orange-500 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between"
+                className="group p-6 sm:p-8 rounded-3xl bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-xl border-2 border-orange-100/90 dark:border-gray-800/80 hover:border-[#ef7b01] dark:hover:border-orange-500 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   {/* Top Row: Icon + Module Index */}
@@ -236,16 +236,16 @@ const LearnLayout = ({
 
       {/* ================= TECH STACK & TOOLS ================= */}
       {tools && tools.length > 0 && (
-        <section className="py-12 bg-white dark:bg-gray-900 border-y border-gray-200/80 dark:border-gray-800">
+        <section className="py-12 bg-white/60 dark:bg-gray-900/60 backdrop-blur-xl border-y border-orange-200/50 dark:border-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-            <h4 className="text-sm font-extrabold text-gray-500 dark:text-gray-400 uppercase tracking-widest mb-6">
+            <h4 className="text-sm font-extrabold text-gray-600 dark:text-gray-400 uppercase tracking-widest mb-6">
               Technologies & Tools Covered
             </h4>
             <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
               {tools.map((tool, idx) => (
                 <span 
                   key={idx} 
-                  className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-200/80 dark:border-gray-700 shadow-sm"
+                  className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white/90 dark:bg-gray-800/90 backdrop-blur-md text-gray-800 dark:text-gray-200 border border-orange-200/80 dark:border-gray-700 shadow-sm"
                 >
                   {tool}
                 </span>

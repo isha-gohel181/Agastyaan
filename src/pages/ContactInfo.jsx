@@ -54,7 +54,7 @@ const infoCards = [
 
 const ContactInfo = () => {
   return (
-    <section className="py-20 bg-gray-50/80 dark:bg-transparent transition-colors duration-500 relative">
+    <section className="py-20 bg-transparent transition-colors duration-500 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
@@ -69,10 +69,10 @@ const ContactInfo = () => {
                 viewport={{ once: true }}
                 className={`
                   p-6 sm:p-8 rounded-3xl
-                  bg-white dark:bg-[#080e24]/90
+                  bg-white/90 dark:bg-[#080e24]/90
                   backdrop-blur-xl
                   border-2 ${card.accentColor}
-                  shadow-xl shadow-gray-200/50 dark:shadow-black/60
+                  shadow-xl shadow-orange-500/5 dark:shadow-black/60
                   hover:shadow-2xl hover:-translate-y-2
                   transition-all duration-500 flex flex-col justify-between group
                 `}

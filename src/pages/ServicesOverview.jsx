@@ -3,8 +3,7 @@ const ServicesOverview = () => {
     <section
       className="
         py-20
-        bg-white 
-        dark:bg-transparent
+        bg-transparent
         transition-colors duration-500
       "
     >

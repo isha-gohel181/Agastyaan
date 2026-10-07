@@ -18,7 +18,7 @@ const features = [
 const AboutWhyChoose = () => {
   return (
     <section className="py-24 
-    bg-white dark:bg-transparent 
+    bg-transparent 
     transition-colors duration-500">
       
       <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-14 items-center">
@@ -38,7 +38,7 @@ const AboutWhyChoose = () => {
         {/* Content */}
         <div>
           <h2 className="text-4xl font-bold mb-8 
-          text-gray-800 dark:text-white">
+          text-gray-900 dark:text-white">
             Why Choose Us
           </h2>
 
@@ -47,16 +47,17 @@ const AboutWhyChoose = () => {
               <div
                 key={index}
                 className="flex gap-4 p-5 
-                bg-gray-50 dark:bg-[#080e24]/90 
-                border border-gray-100 dark:border-white/10
-                backdrop-blur-md
-                rounded-xl 
-                hover:bg-orange-50 dark:hover:bg-[#0f1a3e] 
+                bg-white/90 dark:bg-[#080e24]/90 
+                border border-orange-100/90 dark:border-white/10
+                backdrop-blur-xl
+                rounded-2xl shadow-lg
+                hover:border-[#ef7b01] dark:hover:border-orange-500
+                hover:-translate-y-1
                 transition duration-300"
               >
                 <div className="w-12 h-12 flex items-center justify-center 
-                bg-orange-500 text-white 
-                rounded-full font-bold shadow-md">
+                bg-[#ef7b01] text-white 
+                rounded-full font-bold shadow-md shrink-0">
                   {index + 1}
                 </div>
 

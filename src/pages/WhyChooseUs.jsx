@@ -3,8 +3,7 @@ const WhyChooseUs = () => {
     <section
       className="
         py-20
-        bg-gradient-to-br from-orange-50 via-white to-orange-100
-        dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-transparent
+        bg-transparent
         transition-colors duration-500
       "
     >
@@ -13,10 +12,10 @@ const WhyChooseUs = () => {
         {/* Heading */}
         <h2 className="
           text-3xl md:text-4xl font-bold mb-12
-          text-gray-800 dark:text-white
+          text-gray-900 dark:text-white
         ">
           Why Choose{" "}
-          <span className="text-orange-500 dark:text-orange-400">
+          <span className="text-[#ef7b01] dark:text-orange-400">
             Agastyaan Technology?
           </span>
         </h2>
@@ -33,9 +32,9 @@ const WhyChooseUs = () => {
               key={i}
               className="
                 p-8 rounded-2xl
-                bg-white dark:bg-[#080e24]/90
-                backdrop-blur-md
-                border border-orange-100 dark:border-white/10
+                bg-white/90 dark:bg-[#080e24]/90
+                backdrop-blur-xl
+                border border-orange-100/90 dark:border-white/10
                 shadow-lg dark:shadow-black/40
                 hover:shadow-orange-200 dark:hover:shadow-orange-500/10
                 hover:-translate-y-2

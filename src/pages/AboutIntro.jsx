@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 const AboutIntro = () => {
   return (
     <section className="relative overflow-hidden py-24 
-    bg-gradient-to-br from-orange-50 via-white to-orange-100
-    dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-transparent
+    bg-transparent
     transition-colors duration-500">
       
       {/* ===== Main Content ===== */}
@@ -76,12 +75,12 @@ const AboutIntro = () => {
             className="w-full max-w-md rounded-2xl shadow-2xl"
           />
 
-          {/* Floating Info Card */}
           <motion.div
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
             className="absolute -bottom-6 -left-6 
-            bg-white dark:bg-gray-800 
+            bg-white/90 dark:bg-[#080e24]/90 backdrop-blur-md
+            border border-orange-200/80 dark:border-white/10
             px-5 py-4 rounded-2xl shadow-xl"
           >
             <p className="text-xl font-bold text-orange-600 dark:text-orange-400">

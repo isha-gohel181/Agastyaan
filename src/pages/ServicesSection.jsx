@@ -59,8 +59,7 @@ const ServicesSection = () => {
     <section
       className="
         py-24 
-        bg-gradient-to-b from-white via-orange-50 to-white
-        dark:from-transparent dark:via-transparent dark:to-transparent dark:bg-transparent
+        bg-transparent
         transition-colors duration-500
       "
     >
@@ -84,7 +83,7 @@ const ServicesSection = () => {
             Training Institute & IT Services Under One Roof
           </h2>
 
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-700 dark:text-gray-300">
             Agastyaan is not just an institute — we also deliver professional IT
             solutions for businesses and startups.
           </p>
@@ -102,10 +101,10 @@ const ServicesSection = () => {
                 transition={{ delay: i * 0.1 }}
                 viewport={{ once: true }}
                 className="
-                  relative p-7 rounded-xl
-                  bg-white dark:bg-[#080e24]/90
-                  backdrop-blur-md
-                  border border-gray-200 dark:border-white/10
+                  relative p-7 rounded-2xl
+                  bg-white/90 dark:bg-[#080e24]/90
+                  backdrop-blur-xl
+                  border border-orange-100/90 dark:border-white/10
                   shadow-md dark:shadow-black/40
                   hover:shadow-xl hover:-translate-y-2
                   transition duration-300 group
