@@ -60,6 +60,17 @@ const HeroSection = () => {
     };
   }, []);
 
+  // Auto-close card on scroll past hero section
+  useEffect(() => {
+    const handleScroll = () => {
+      if (selectedCourse !== null && window.scrollY > 280) {
+        handleCloseCard();
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [selectedCourse, handleCloseCard]);
+
   // Close modal on Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -83,55 +94,64 @@ const HeroSection = () => {
         </p>
       </div>
 
-      {/* Interactive Course Dialog Card */}
+      {/* Interactive Course Dialog Card with Backdrop */}
       {selectedCourse !== null && (
-        <div
-          id="card"
-          role="dialog"
-          aria-label="Agastyaan Technology course"
-          className="fixed left-1/2 -translate-x-1/2 bottom-[calc(20px+env(safe-area-inset-bottom,0px))] w-[min(92vw,420px)] bg-white/95 dark:bg-[#080e22]/90 border border-orange-200/90 dark:border-white/20 rounded-[18px] p-[18px_18px_16px] backdrop-blur-xl shadow-2xl dark:shadow-[0_10px_40px_rgba(0,0,0,.5),0_0_30px_rgba(0,230,255,.12)] z-50 font-sans text-left animate-in fade-in zoom-in-95 duration-200"
-        >
-          <button
-            id="cx"
-            type="button"
-            aria-label="Close"
-            onClick={handleCloseCard}
-            className="absolute top-2 right-2.5 w-[34px] h-[34px] p-0 text-xl leading-none rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-gray-700 dark:text-[#e9eefc] border border-gray-200 dark:border-white/20 flex items-center justify-center cursor-pointer transition-colors"
-          >
-            &times;
-          </button>
-          <div className="text-[0.65rem] tracking-[0.16em] text-[#ef7b01] dark:text-[#9fb0d9] font-bold">
-            COURSE AT AGASTYAAN TECHNOLOGY
-          </div>
+        <>
+          {/* Backdrop Scrim (clicking anywhere outside closes the card) */}
           <div
-            id="ct"
-            className="font-serif text-[2rem] font-medium my-[4px_0_2px] text-gray-900 dark:text-[#e9eefc]"
+            onClick={handleCloseCard}
+            className="fixed inset-0 bg-black/40 backdrop-blur-xs z-40 transition-opacity animate-in fade-in duration-200"
+            aria-hidden="true"
+          />
+
+          <div
+            id="card"
+            role="dialog"
+            aria-label="Agastyaan Technology course"
+            className="fixed left-1/2 -translate-x-1/2 bottom-[calc(20px+env(safe-area-inset-bottom,0px))] w-[min(92vw,420px)] bg-white/95 dark:bg-[#080e22]/95 border border-orange-200/90 dark:border-white/20 rounded-[18px] p-[18px_18px_16px] backdrop-blur-xl shadow-2xl dark:shadow-[0_10px_40px_rgba(0,0,0,.5),0_0_30px_rgba(0,230,255,.12)] z-50 font-sans text-left animate-in fade-in zoom-in-95 duration-200"
           >
-            {COURSE_NAMES[selectedCourse]}
+            <button
+              id="cx"
+              type="button"
+              aria-label="Close"
+              onClick={handleCloseCard}
+              className="absolute top-2 right-2.5 w-[34px] h-[34px] p-0 text-xl leading-none rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-white/10 dark:hover:bg-white/20 text-gray-700 dark:text-[#e9eefc] border border-gray-200 dark:border-white/20 flex items-center justify-center cursor-pointer transition-colors"
+            >
+              &times;
+            </button>
+            <div className="text-[0.65rem] tracking-[0.16em] text-[#ef7b01] dark:text-[#9fb0d9] font-bold">
+              COURSE AT AGASTYAAN TECHNOLOGY
+            </div>
+            <div
+              id="ct"
+              className="font-serif text-[2rem] font-medium my-[4px_0_2px] text-gray-900 dark:text-[#e9eefc]"
+            >
+              {COURSE_NAMES[selectedCourse]}
+            </div>
+            <div className="text-[0.7rem] tracking-[0.14em] text-[#2E7D32] dark:text-[#d6ff7a] mb-3 font-extrabold">
+              THE RIGHT SKILLS. THE RIGHT JOB.
+            </div>
+            <div id="chips" className="flex flex-wrap gap-2">
+              {COURSE_NAMES.map((name, i) => (
+                <button
+                  key={name}
+                  type="button"
+                  onClick={() => handleOpenCard(i)}
+                  className={`py-[7px] px-3 text-[0.8rem] rounded-full border transition-all font-sans cursor-pointer ${
+                    i === selectedCourse
+                      ? "border-[#ef7b01] text-white bg-[#ef7b01] shadow-md shadow-orange-500/20 dark:border-[#d6ff7a] dark:text-[#d6ff7a] dark:bg-[#d6ff7a]/15 dark:shadow-[0_0_12px_rgba(214,255,122,0.25)]"
+                      : "border-gray-200 dark:border-white/20 text-gray-700 dark:text-[#e9eefc] bg-gray-50/80 hover:bg-gray-100 dark:bg-white/5 dark:hover:bg-white/10"
+                  }`}
+                >
+                  {name}
+                </button>
+              ))}
+            </div>
+            <div className="mt-3 text-[0.7rem] text-gray-500 dark:text-[#9fb0d9] leading-[1.4]">
+              Agastyaan Technology &middot; Khanpur, Kharar, Mohali, Punjab
+            </div>
           </div>
-          <div className="text-[0.7rem] tracking-[0.14em] text-[#2E7D32] dark:text-[#d6ff7a] mb-3 font-extrabold">
-            THE RIGHT SKILLS. THE RIGHT JOB.
-          </div>
-          <div id="chips" className="flex flex-wrap gap-2">
-            {COURSE_NAMES.map((name, i) => (
-              <button
-                key={name}
-                type="button"
-                onClick={() => handleOpenCard(i)}
-                className={`py-[7px] px-3 text-[0.8rem] rounded-full border transition-all font-sans cursor-pointer ${
-                  i === selectedCourse
-                    ? "border-[#ef7b01] text-white bg-[#ef7b01] shadow-md shadow-orange-500/20 dark:border-[#d6ff7a] dark:text-[#d6ff7a] dark:bg-[#d6ff7a]/15 dark:shadow-[0_0_12px_rgba(214,255,122,0.25)]"
-                    : "border-gray-200 dark:border-white/20 text-gray-700 dark:text-[#e9eefc] bg-gray-50/80 hover:bg-gray-100 dark:bg-white/5 dark:hover:bg-white/10"
-                }`}
-              >
-                {name}
-              </button>
-            ))}
-          </div>
-          <div className="mt-3 text-[0.7rem] text-gray-500 dark:text-[#9fb0d9] leading-[1.4]">
-            Agastyaan Technology &middot; Khanpur, Kharar, Mohali, Punjab
-          </div>
-        </div>
+        </>
       )}
 
       {/* Interaction Hint Bottom */}

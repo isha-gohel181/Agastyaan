@@ -378,9 +378,11 @@ const FixedLivingBackground = () => {
     }
 
     function addFlies(n) {
+      const isMobile = sim.W > 0 && sim.W < 768;
+      const maxFlies = isMobile ? 24 : 120;
       for (let i = 0; i < n; i++) sim.flies.push(makeFly());
-      if (sim.flies.length > 160) {
-        sim.flies.splice(0, sim.flies.length - 160);
+      if (sim.flies.length > maxFlies) {
+        sim.flies.splice(0, sim.flies.length - maxFlies);
       }
     }
 
@@ -393,9 +395,20 @@ const FixedLivingBackground = () => {
     }
 
     function resize() {
-      sim.dpr = Math.min(window.devicePixelRatio || 1, 2);
-      sim.W = window.innerWidth;
-      sim.H = window.innerHeight;
+      const isMobile = window.innerWidth < 768;
+      const newW = window.innerWidth;
+      const newH = window.innerHeight;
+
+      // On mobile browsers, scrolling hides/shows the address bar which changes window.innerHeight by 50-90px.
+      // If width hasn't changed and height difference is small, ignore it!
+      // This stops the whole background from moving at the bottom and prevents canvas stutter/freezing.
+      if (sim.W > 0 && Math.abs(newW - sim.W) <= 4 && Math.abs(newH - sim.H) < 140) {
+        return;
+      }
+
+      sim.dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.75);
+      sim.W = newW;
+      sim.H = newH;
       canvas.width = sim.W * sim.dpr;
       canvas.height = sim.H * sim.dpr;
       ctx.setTransform(sim.dpr, 0, 0, sim.dpr, 0, 0);
@@ -970,6 +983,7 @@ const FixedLivingBackground = () => {
       ];
       ctx.globalCompositeOperation = "lighter";
       const hg = sim.H * 0.22;
+      const aStep = sim.W < 768 ? 14 : 6;
       for (let r = 0; r < 3; r++) {
         const g = ctx.createLinearGradient(0, 0, 0, hg);
         g.addColorStop(0, "rgba(" + cols[r][0] + ",0)");
@@ -977,7 +991,7 @@ const FixedLivingBackground = () => {
         g.addColorStop(0.8, "rgba(" + cols[r][1] + ",.35)");
         g.addColorStop(1, "rgba(" + cols[r][1] + ",0)");
         ctx.fillStyle = g;
-        for (let x = 0; x < sim.W; x += 6) {
+        for (let x = 0; x < sim.W; x += aStep) {
           const w =
             Math.sin(x * 0.004 + tt * 0.15 + r * 2) +
             Math.sin(x * 0.011 - tt * 0.22 + r) * 0.5;
@@ -987,10 +1001,7 @@ const FixedLivingBackground = () => {
               0,
               0.07 + 0.04 * Math.sin(x * 0.01 + tt * 0.4 + r * 1.7)
             ) * (r === 2 ? 0.7 : 1);
-          ctx.save();
-          ctx.translate(0, top);
-          ctx.fillRect(x, 0, 6, hg);
-          ctx.restore();
+          ctx.fillRect(x, top, aStep, hg);
         }
       }
       ctx.globalAlpha = 1;
@@ -1270,16 +1281,17 @@ const FixedLivingBackground = () => {
 
     function drawGrass() {
       const isDark = sim.isDark;
+      const isMobile = sim.W < 768;
       const rows = isDark
         ? [
-            { step: 3, hmin: 10, hmax: 22, col: "#08132a", tip: "rgba(120,255,200,.22)", off: -6, lw: 1 },
-            { step: 3, hmin: 14, hmax: 30, col: "#050b18", tip: "rgba(150,255,120,.18)", off: -2, lw: 1.3 },
-            { step: 4, hmin: 20, hmax: 44, col: "#03060d", tip: null, off: 6, lw: 1.8 },
+            { step: isMobile ? 8 : 3, hmin: 10, hmax: 22, col: "#08132a", tip: "rgba(120,255,200,.22)", off: -6, lw: 1 },
+            { step: isMobile ? 9 : 3, hmin: 14, hmax: 30, col: "#050b18", tip: "rgba(150,255,120,.18)", off: -2, lw: 1.3 },
+            { step: isMobile ? 11 : 4, hmin: 20, hmax: 44, col: "#03060d", tip: null, off: 6, lw: 1.8 },
           ]
         : [
-            { step: 3, hmin: 10, hmax: 22, col: "#15803d", tip: "rgba(250,204,21,.85)", off: -6, lw: 1 },
-            { step: 3, hmin: 14, hmax: 30, col: "#166534", tip: "rgba(253,224,71,.75)", off: -2, lw: 1.3 },
-            { step: 4, hmin: 20, hmax: 44, col: "#14532d", tip: null, off: 6, lw: 1.8 },
+            { step: isMobile ? 8 : 3, hmin: 10, hmax: 22, col: "#15803d", tip: "rgba(250,204,21,.85)", off: -6, lw: 1 },
+            { step: isMobile ? 9 : 3, hmin: 14, hmax: 30, col: "#166534", tip: "rgba(253,224,71,.75)", off: -2, lw: 1.3 },
+            { step: isMobile ? 11 : 4, hmin: 20, hmax: 44, col: "#14532d", tip: null, off: 6, lw: 1.8 },
           ];
 
       for (let r = 0; r < rows.length; r++) {
@@ -1447,8 +1459,9 @@ const FixedLivingBackground = () => {
       const bx = p.clientX;
       const by = p.clientY;
 
-      // Check if clicking on a course portal orb
-      if (!isInteractive) {
+      // Check if clicking on a course portal orb (ONLY when viewing the hero section)
+      const sy = window.scrollY || window.pageYOffset || 0;
+      if (!isInteractive && sy < 250) {
         const hc = hitCourse(bx, by);
         if (hc >= 0) {
           window.dispatchEvent(new CustomEvent("open-course-card", { detail: { courseIndex: hc } }));
@@ -1458,7 +1471,10 @@ const FixedLivingBackground = () => {
       }
 
       if (!sim.isDark) return;
-      for (let i = 0; i < 14; i++) {
+      const isMobile = sim.W < 768;
+      const burstCount = isMobile ? 3 : 10;
+      const maxFlies = isMobile ? 24 : 120;
+      for (let i = 0; i < burstCount; i++) {
         const f = makeFly(bx, by);
         const an = Math.random() * 6.283;
         const sp = 1.5 + Math.random() * 3;
@@ -1466,13 +1482,13 @@ const FixedLivingBackground = () => {
         f.vy = Math.sin(an) * sp;
         sim.flies.push(f);
       }
-      if (sim.flies.length > 160) {
-        sim.flies.splice(0, sim.flies.length - 160);
+      if (sim.flies.length > maxFlies) {
+        sim.flies.splice(0, sim.flies.length - maxFlies);
       }
     }
 
     const handleAddCustom = (e) => {
-      const count = (e && e.detail && e.detail.count) || 12;
+      const count = (e && e.detail && e.detail.count) || 8;
       addFlies(count);
     };
 
@@ -1486,7 +1502,7 @@ const FixedLivingBackground = () => {
     window.addEventListener("add-fireflies", handleAddCustom);
 
     resize();
-    addFlies(Math.round(Math.min(80, Math.max(35, sim.W / 14))));
+    addFlies(sim.W < 768 ? 16 : Math.round(Math.min(65, Math.max(30, sim.W / 18))));
     sim.animId = requestAnimationFrame(frame);
 
     return () => {
