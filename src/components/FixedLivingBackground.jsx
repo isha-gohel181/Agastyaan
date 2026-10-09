@@ -57,69 +57,127 @@ const FixedLivingBackground = () => {
     isDark: true,
   });
 
+  // Helper: Pink/Brown noise buffer for organic night wind & foliage rustle
+  const createNatureNoiseBuffer = (ac) => {
+    const bufferSize = ac.sampleRate * 4;
+    const buffer = ac.createBuffer(1, bufferSize, ac.sampleRate);
+    const output = buffer.getChannelData(0);
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+    for (let i = 0; i < bufferSize; i++) {
+      const white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+      output[i] *= 0.11;
+      b6 = white * 0.115926;
+    }
+    return buffer;
+  };
+
   // Sound Engine Functions
-  const bell = useCallback((freq = 600) => {
-    if (!soundOnRef.current || !audioCtxRef.current) return;
+  // 1. Magical Firefly Glass Chimes (soft pentatonic glass tone for clicks)
+  const bell = useCallback((freq = 520) => {
+    if (!soundOnRef.current || !audioCtxRef.current || !masterGainRef.current) return;
     const ac = audioCtxRef.current;
+    if (ac.state === "suspended") return;
     const now = ac.currentTime;
-    const osc = ac.createOscillator();
+
+    const osc1 = ac.createOscillator();
+    const osc2 = ac.createOscillator();
     const g = ac.createGain();
-    osc.type = "sine";
-    osc.frequency.value = freq;
+    const filter = ac.createBiquadFilter();
+
+    osc1.type = "sine";
+    osc2.type = "triangle";
+    osc1.frequency.value = freq;
+    osc2.frequency.value = freq * 2.003;
+
+    filter.type = "lowpass";
+    filter.frequency.value = 1800;
+
     g.gain.setValueAtTime(0.0001, now);
-    g.gain.exponentialRampToValueAtTime(0.06, now + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
-    osc.connect(g);
-    osc.connect(masterGainRef.current);
-    osc.start(now);
-    osc.stop(now + 1.3);
+    g.gain.linearRampToValueAtTime(0.035, now + 0.025);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + 1.6);
+
+    osc1.connect(g);
+    osc2.connect(g);
+    g.connect(filter);
+    filter.connect(masterGainRef.current);
+
+    osc1.start(now);
+    osc2.start(now);
+    osc1.stop(now + 1.7);
+    osc2.stop(now + 1.7);
   }, []);
 
+  // 2. Realistic Night Crickets & Insects ("trr-trr-trr" bandpass stridulation)
   const chirp = useCallback((ep) => {
-    if (!soundOnRef.current || ep !== epochRef.current || !audioCtxRef.current)
+    if (!soundOnRef.current || ep !== epochRef.current || !audioCtxRef.current || !masterGainRef.current)
       return;
     const ac = audioCtxRef.current;
+    if (ac.state === "suspended") return;
     const now = ac.currentTime;
-    const f = 3900 + Math.random() * 700;
-    const n = 3 + Math.floor(Math.random() * 2);
-    for (let k = 0; k < n; k++) {
-      const o = ac.createOscillator();
-      const g = ac.createGain();
-      o.type = "sine";
-      o.frequency.value = f;
-      o.connect(g);
-      g.connect(masterGainRef.current);
-      const st = now + k * 0.075;
-      g.gain.setValueAtTime(0, st);
-      g.gain.linearRampToValueAtTime(0.006, st + 0.015);
-      g.gain.linearRampToValueAtTime(0.005, st + 0.05);
-      o.start(st);
-      o.stop(st + 0.06);
+
+    const baseFreq = 4300 + Math.random() * 400;
+    const pulses = 3 + Math.floor(Math.random() * 2);
+    const bp = ac.createBiquadFilter();
+    bp.type = "bandpass";
+    bp.frequency.value = baseFreq;
+    bp.Q.value = 14;
+
+    bp.connect(masterGainRef.current);
+
+    for (let k = 0; k < pulses; k++) {
+      const st = now + k * 0.038;
+      const osc = ac.createOscillator();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(baseFreq, st);
+      osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.93, st + 0.022);
+
+      const pulseGain = ac.createGain();
+      pulseGain.gain.setValueAtTime(0.0001, st);
+      pulseGain.gain.linearRampToValueAtTime(0.0035, st + 0.006);
+      pulseGain.gain.exponentialRampToValueAtTime(0.0001, st + 0.024);
+
+      osc.connect(pulseGain);
+      pulseGain.connect(bp);
+      osc.start(st);
+      osc.stop(st + 0.026);
     }
+
+    const nextDelay = 800 + Math.random() * 2400;
     setTimeout(() => {
       chirp(ep);
-    }, 500 + Math.random() * 1800);
+    }, nextDelay);
   }, []);
 
+  // 3. Soft Nocturnal Owl Hoot
   const hoot = useCallback((st, f) => {
     if (!audioCtxRef.current || !masterGainRef.current) return;
     const ac = audioCtxRef.current;
     const o = ac.createOscillator();
     o.type = "sine";
     o.frequency.setValueAtTime(f, st);
-    o.frequency.linearRampToValueAtTime(f * 0.88, st + 0.4);
+    o.frequency.exponentialRampToValueAtTime(f * 0.85, st + 0.45);
+
     const lp = ac.createBiquadFilter();
     lp.type = "lowpass";
-    lp.frequency.value = 900;
+    lp.frequency.value = 450;
+
     const g = ac.createGain();
-    g.gain.setValueAtTime(0, st);
-    g.gain.linearRampToValueAtTime(0.05, st + 0.08);
-    g.gain.linearRampToValueAtTime(0.005, st + 0.45);
+    g.gain.setValueAtTime(0.0001, st);
+    g.gain.linearRampToValueAtTime(0.035, st + 0.09);
+    g.gain.exponentialRampToValueAtTime(0.0001, st + 0.5);
+
     o.connect(g);
     g.connect(lp);
     lp.connect(masterGainRef.current);
     o.start(st);
-    o.stop(st + 0.5);
+    o.stop(st + 0.55);
   }, []);
 
   const owl = useCallback(
@@ -127,15 +185,16 @@ const FixedLivingBackground = () => {
       if (!soundOnRef.current || ep !== epochRef.current || !audioCtxRef.current)
         return;
       const now = audioCtxRef.current.currentTime;
-      hoot(now, 390);
-      hoot(now + 0.6, 350);
+      hoot(now, 330);
+      hoot(now + 0.65, 290);
       setTimeout(() => {
         owl(ep);
-      }, 12000 + Math.random() * 14000);
+      }, 14000 + Math.random() * 16000);
     },
     [hoot]
   );
 
+  // 4. Main Nature Night Soundscape Synthesizer
   const startAudio = useCallback(() => {
     if (audioCtxRef.current) return true;
     const AudioContextClass =
@@ -149,58 +208,80 @@ const FixedLivingBackground = () => {
     master.connect(ac.destination);
     masterGainRef.current = master;
 
+    // --- Deep Warm E-Minor Nocturnal Atmosphere Pad ---
     const padG = ac.createGain();
-    padG.gain.value = 0.05;
-    const lp = ac.createBiquadFilter();
-    lp.type = "lowpass";
-    lp.frequency.value = 700;
-    padG.connect(lp);
-    lp.connect(master);
+    padG.gain.value = 0.04;
+    const padLp = ac.createBiquadFilter();
+    padLp.type = "lowpass";
+    padLp.frequency.value = 240; // Deep lowpass eliminates electrical ICU hum
+    padG.connect(padLp);
+    padLp.connect(master);
 
-    [110, 164.81, 220, 277.18].forEach((f, i) => {
+    // Warm organic low frequencies (E2, B2, E3, G3)
+    [82.41, 123.47, 164.81, 196.0].forEach((f, i) => {
       const o = ac.createOscillator();
-      o.type = i % 2 ? "sine" : "triangle";
+      o.type = i % 2 === 0 ? "sine" : "triangle";
       o.frequency.value = f;
-      o.detune.value = (i - 1.5) * 6;
+      o.detune.value = (i - 1.5) * 4;
       const g = ac.createGain();
-      g.gain.value = 0.25;
+      g.gain.value = 0.2;
       o.connect(g);
       g.connect(padG);
       o.start();
     });
 
-    const lfo = ac.createOscillator();
-    lfo.frequency.value = 0.07;
-    const lg = ac.createGain();
-    lg.gain.value = 0.025;
-    lfo.connect(lg);
-    lg.connect(padG.gain);
-    lfo.start();
+    const padLfo = ac.createOscillator();
+    padLfo.frequency.value = 0.04;
+    const padLfoGain = ac.createGain();
+    padLfoGain.gain.value = 0.012;
+    padLfo.connect(padLfoGain);
+    padLfoGain.connect(padG.gain);
+    padLfo.start();
 
-    const len = ac.sampleRate * 3;
-    const buf = ac.createBuffer(1, len, ac.sampleRate);
-    const d = buf.getChannelData(0);
-    for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
-    const ns = ac.createBufferSource();
-    ns.buffer = buf;
-    ns.loop = true;
-    const wl = ac.createBiquadFilter();
-    wl.type = "lowpass";
-    wl.frequency.value = 380;
-    const wg = ac.createGain();
-    wg.gain.value = 0.03;
-    ns.connect(wl);
-    wl.connect(wg);
-    wg.connect(master);
-    ns.start();
+    // --- Gentle Night Wind & Leaf Rustle ---
+    const natureBuffer = createNatureNoiseBuffer(ac);
+    const windSource = ac.createBufferSource();
+    windSource.buffer = natureBuffer;
+    windSource.loop = true;
 
-    const l2 = ac.createOscillator();
-    l2.frequency.value = 0.11;
-    const lg2 = ac.createGain();
-    lg2.gain.value = 0.02;
-    l2.connect(lg2);
-    lg2.connect(wg.gain);
-    l2.start();
+    const windFilter = ac.createBiquadFilter();
+    windFilter.type = "lowpass";
+    windFilter.frequency.value = 180;
+
+    const windGain = ac.createGain();
+    windGain.gain.value = 0.025;
+
+    windSource.connect(windFilter);
+    windFilter.connect(windGain);
+    windGain.connect(master);
+    windSource.start();
+
+    // Wind filter breathing LFO
+    const windLfo = ac.createOscillator();
+    windLfo.frequency.value = 0.05;
+    const windLfoGain = ac.createGain();
+    windLfoGain.gain.value = 75;
+    windLfo.connect(windLfoGain);
+    windLfoGain.connect(windFilter.frequency);
+    windLfo.start();
+
+    // --- Soft Ambient Insect Chorus Shimmer ---
+    const insectSource = ac.createBufferSource();
+    insectSource.buffer = natureBuffer;
+    insectSource.loop = true;
+
+    const insectBp = ac.createBiquadFilter();
+    insectBp.type = "bandpass";
+    insectBp.frequency.value = 4600;
+    insectBp.Q.value = 10;
+
+    const insectGain = ac.createGain();
+    insectGain.gain.value = 0.0012;
+
+    insectSource.connect(insectBp);
+    insectBp.connect(insectGain);
+    insectGain.connect(master);
+    insectSource.start();
 
     return true;
   }, []);
@@ -214,14 +295,14 @@ const FixedLivingBackground = () => {
       soundOnRef.current = true;
       epochRef.current++;
       masterGainRef.current.gain.setTargetAtTime(
-        0.9,
+        0.85,
         audioCtxRef.current.currentTime,
         0.8
       );
       const ep = epochRef.current;
       chirp(ep);
-      setTimeout(() => chirp(ep), 700);
-      setTimeout(() => owl(ep), 4000);
+      setTimeout(() => chirp(ep), 600);
+      setTimeout(() => owl(ep), 3500);
       window.dispatchEvent(
         new CustomEvent("ambient-sound-status", { detail: { soundOn: true } })
       );
