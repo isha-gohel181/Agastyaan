@@ -333,7 +333,7 @@ const FixedLivingBackground = () => {
 
     function addFlies(n) {
       const isMobile = sim.W > 0 && sim.W < 768;
-      const maxFlies = isMobile ? 24 : 120;
+      const maxFlies = isMobile ? 24 : 140;
       for (let i = 0; i < n; i++) sim.flies.push(makeFly());
       if (sim.flies.length > maxFlies) {
         sim.flies.splice(0, sim.flies.length - maxFlies);
@@ -349,7 +349,6 @@ const FixedLivingBackground = () => {
     }
 
     function resize() {
-      const isMobile = window.innerWidth < 768;
       const newW = window.innerWidth;
       const newH = window.innerHeight;
 
@@ -360,7 +359,9 @@ const FixedLivingBackground = () => {
         return;
       }
 
-      sim.dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.75);
+      // Cap the pixel ratio on phones so the heavy canvas keeps scrolling smooth.
+      const isMobile = newW < 768;
+      sim.dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       sim.W = newW;
       sim.H = newH;
       canvas.width = sim.W * sim.dpr;
@@ -464,8 +465,8 @@ const FixedLivingBackground = () => {
         ? [0.26, 0.74, 0.26, 0.74, 0.26, 0.74]
         : [0.15, 0.29, 0.43, 0.57, 0.71, 0.85];
       const cys = narrow
-        ? [0.48, 0.48, 0.60, 0.60, 0.72, 0.72]
-        : [0.60, 0.60, 0.60, 0.60, 0.60, 0.60];
+        ? [0.38, 0.38, 0.5, 0.5, 0.62, 0.62]
+        : [0.5, 0.5, 0.5, 0.5, 0.5, 0.5];
       sim.courses = [];
       for (let ci = 0; ci < 6; ci++) {
         sim.courses.push({
@@ -665,7 +666,7 @@ const FixedLivingBackground = () => {
         ctx.fillRect(b.x, top, b.w, 1.2);
         ctx.fillStyle = c + ".6)";
         ctx.fillRect(mx - 0.5, top + b.h * 0.15, 1, b.h * 0.75);
-        ctx.fillStyle = c + ".35)";
+        ctx.fillStyle = c + ".3)";
         for (let wy = top + 6; wy < base - 4; wy += 5) {
           ctx.fillRect(b.x + 2, wy, b.w - 4, 1);
         }
@@ -674,8 +675,8 @@ const FixedLivingBackground = () => {
             ? 0.8
             : 0.5 + 0.5 * Math.sin(sim.t * 1.6 + b.ph);
           ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
-          ctx.strokeStyle = c + (0.35 + 0.45 * pulse) + ")";
-          ctx.lineWidth = 1.2;
+          ctx.strokeStyle = c + (0.3 + 0.4 * pulse) + ")";
+          ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.ellipse(mx, top - 4, b.w * 1.6, 2.2, 0, 0, 6.283);
           ctx.stroke();
@@ -1095,21 +1096,19 @@ const FixedLivingBackground = () => {
 
     function drawCourses() {
       const isDark = sim.isDark;
-      const sy = window.scrollY || window.pageYOffset || 0;
       ctx.textAlign = "center";
       for (let i = 0; i < sim.courses.length; i++) {
         const c = sim.courses[i];
         const by =
-          c.y - sy + (sim.reduce ? 0 : Math.sin(sim.t * 0.9 + c.ph) * 6);
+          c.y + (sim.reduce ? 0 : Math.sin(sim.t * 0.9 + c.ph) * 6);
         c.dy = by;
-
-        // Don't draw if scrolled off-screen
-        if (by < -70 || by > sim.H + 70) continue;
 
         const col = isDark
           ? "hsla(" + c.hue + ",100%,68%,"
           : "hsla(" + c.hue + ",95%,45%,";
         const on = i === sim.sel;
+        const pu = sim.reduce ? 0.8 : 0.6 + 0.4 * Math.sin(sim.t * 1.6 + c.ph);
+
         ctx.globalCompositeOperation = isDark ? "lighter" : "source-over";
         const g = ctx.createRadialGradient(
           c.x,
@@ -1119,7 +1118,7 @@ const FixedLivingBackground = () => {
           by,
           on ? 46 : 34
         );
-        g.addColorStop(0, col + (0.55 * puCalc(c.ph) + (on ? 0.25 : 0)) + ")");
+        g.addColorStop(0, col + (0.55 * pu + (on ? 0.25 : 0)) + ")");
         g.addColorStop(1, col + "0)");
         ctx.fillStyle = g;
         ctx.beginPath();
@@ -1131,8 +1130,8 @@ const FixedLivingBackground = () => {
         ctx.arc(c.x, by, 5, 0, 6.283);
         ctx.fill();
 
-        ctx.strokeStyle = col + (0.5 + 0.3 * puCalc(c.ph)) + ")";
-        ctx.lineWidth = 1.4;
+        ctx.strokeStyle = col + (0.5 + 0.3 * pu) + ")";
+        ctx.lineWidth = 1.2;
         ctx.beginPath();
         ctx.arc(c.x, by, 13, 0, 6.283);
         ctx.stroke();
@@ -1144,19 +1143,20 @@ const FixedLivingBackground = () => {
           ctx.arc(
             c.x + Math.cos(a) * 13,
             by + Math.sin(a) * 13,
-            2,
+            1.8,
             0,
             6.283
           );
           ctx.fill();
         }
         ctx.globalCompositeOperation = "source-over";
-        
-        ctx.font = "bold 13px system-ui,-apple-system,Segoe UI,Roboto,sans-serif";
+
         if (isDark) {
-          ctx.fillStyle = "rgba(233,238,252,.95)";
+          ctx.font = "600 12px system-ui,-apple-system,Segoe UI,Roboto,sans-serif";
+          ctx.fillStyle = "rgba(233,238,252,.92)";
           ctx.fillText(c.name, c.x, by + 30);
         } else {
+          ctx.font = "bold 13px system-ui,-apple-system,Segoe UI,Roboto,sans-serif";
           const tw = ctx.measureText(c.name).width;
           ctx.fillStyle = "rgba(255,255,255,0.9)";
           ctx.beginPath();
@@ -1175,10 +1175,6 @@ const FixedLivingBackground = () => {
         }
       }
       ctx.textAlign = "start";
-    }
-
-    function puCalc(ph) {
-      return sim.reduce ? 0.8 : 0.6 + 0.4 * Math.sin(sim.t * 1.6 + ph);
     }
 
     function drawCraft() {
@@ -1426,8 +1422,8 @@ const FixedLivingBackground = () => {
 
       if (!sim.isDark) return;
       const isMobile = sim.W < 768;
-      const burstCount = isMobile ? 3 : 10;
-      const maxFlies = isMobile ? 24 : 120;
+      const burstCount = isMobile ? 3 : 14;
+      const maxFlies = isMobile ? 24 : 140;
       for (let i = 0; i < burstCount; i++) {
         const f = makeFly(bx, by);
         const an = Math.random() * 6.283;
@@ -1456,7 +1452,7 @@ const FixedLivingBackground = () => {
     window.addEventListener("add-fireflies", handleAddCustom);
 
     resize();
-    addFlies(sim.W < 768 ? 16 : Math.round(Math.min(65, Math.max(30, sim.W / 18))));
+    addFlies(sim.W < 768 ? 16 : Math.round(Math.min(70, Math.max(28, sim.W / 14))));
     sim.animId = requestAnimationFrame(frame);
 
     return () => {
