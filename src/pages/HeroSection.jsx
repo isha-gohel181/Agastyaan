@@ -81,7 +81,7 @@ const HeroSection = () => {
   }, [handleCloseCard]);
 
   return (
-    <section className="relative w-full min-h-[92vh] md:min-h-screen flex flex-col justify-start pt-6 sm:pt-10 md:pt-12 pb-16 px-4 text-center select-none z-10 font-sans bg-transparent">
+    <section className="relative w-full min-h-[92svh] md:min-h-screen flex flex-col justify-start pt-6 sm:pt-10 md:pt-12 pb-16 px-4 text-center select-none z-10 font-sans bg-transparent">
       
       {/* Copy / Hero Heading */}
       <div className="max-w-4xl mx-auto px-4 pointer-events-none z-10 font-sans">

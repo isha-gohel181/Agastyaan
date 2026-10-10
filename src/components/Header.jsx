@@ -11,17 +11,27 @@ export default function Header() {
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
+    let ticking = false;
 
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        const delta = currentScrollY - lastScrollY;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
-
-      lastScrollY = currentScrollY;
+        // Ignore tiny scroll jitter (mobile URL bar show/hide, momentum)
+        // so the header doesn't flap up and down while scrolling on phones.
+        if (Math.abs(delta) > 8) {
+          if (delta > 0 && currentScrollY > 120) {
+            setShowHeader(false);
+          } else if (delta < 0) {
+            setShowHeader(true);
+          }
+          lastScrollY = currentScrollY;
+        }
+        ticking = false;
+      });
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
